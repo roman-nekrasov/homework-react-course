@@ -15,7 +15,7 @@ function HomePage({onChangePage}) {
 
 	return (
 		<>
-			{/* <MenuHeader /> */}
+			<MenuHeader />
 			<Header
 				title="This is title!"
 				descr="This is description!"

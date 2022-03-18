@@ -1,7 +1,9 @@
 import style from './style.module.css'
 import cn from 'classnames'
 
-const NavBar = () => {
+const NavBar = ({ isActive, onClickButton }) => {
+
+
 	return (
 		<>
 			<nav className={style.root}>
@@ -9,7 +11,7 @@ const NavBar = () => {
 					<p className={style.brand}>
 						LOGO
 					</p>
-					<a href='#' className={cn(style.menuButton, style.active)}>
+					<a onClick={onClickButton} href='#' className={cn(style.menuButton, { [style.active]: isActive })}>
 						<span />
 					</a>
 				</div>

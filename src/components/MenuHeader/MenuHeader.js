@@ -1,14 +1,19 @@
-import Menu from '../Menu/Menu'
-import NavBar from '../NavBar/NavBar'
-
+import { useState } from "react";
+import Menu from "../Menu/Menu";
+import NavBar from "../NavBar/NavBar";
 
 const MenuHeader = () => {
+	const [isActive, setActive] = useState(false);
+	const onClickButton = () => {
+		setActive(!isActive);
+	};
+
 	return (
 		<>
-			<Menu />
-			<NavBar />
+			<NavBar isActive={isActive} onClickButton={onClickButton} />
+			<Menu isActive={isActive} />
 		</>
-	)
-}
+	);
+};
 
-export default MenuHeader
+export default MenuHeader;
