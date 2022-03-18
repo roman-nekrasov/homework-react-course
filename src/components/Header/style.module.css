@@ -88,3 +88,17 @@
     color: #fafafa;
     line-height: 32px;
 }
+
+/* ========================== Temporary styles*/
+.switch-button {
+	padding: 5px 10px;
+	border-radius: 4px;
+	border: none;
+	background-color: rgb(230, 97, 219);
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.switch-button:hover {
+	background-color: rgb(220, 57, 206);
+}
