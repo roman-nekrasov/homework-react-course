@@ -10,22 +10,22 @@ const Menu = ({ isActive, isDeactive }) => {
 				<div className={style.menuItems}>
 					<ul>
 						<li>
-							<a href="#">
+							<a href="#welcome">
 								HOME
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="#game">
 								GAME
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="#about">
 								ABOUT
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="#contact">
 								CONTACT
 							</a>
 						</li>

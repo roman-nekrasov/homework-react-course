@@ -11,7 +11,7 @@ const NavBar = ({ isActive, onClickButton }) => {
 					<p className={style.brand}>
 						LOGO
 					</p>
-					<a onClick={onClickButton} href='#' className={cn(style.menuButton, { [style.active]: isActive })}>
+					<a href="/#" onClick={onClickButton} className={cn(style.menuButton, { [style.active]: isActive })}>
 						<span />
 					</a>
 				</div>
