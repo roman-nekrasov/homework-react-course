@@ -2,6 +2,7 @@ import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
 import PokemonCard from "../../components/PokemonCard/PokemonCard";
+import MenuHeader from "../../components/MenuHeader/MenuHeader";
 import bg1 from "../../assets/bg1.jpg"
 import style from "./style.module.css"
 import { pokemons } from "../../assets/pokemons";
@@ -14,6 +15,7 @@ function HomePage({onChangePage}) {
 
 	return (
 		<>
+			{/* <MenuHeader /> */}
 			<Header
 				title="This is title!"
 				descr="This is description!"
