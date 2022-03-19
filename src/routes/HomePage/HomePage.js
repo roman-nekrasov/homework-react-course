@@ -3,15 +3,13 @@ import Layout from "../../components/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
 import PokemonCard from "../../components/PokemonCard/PokemonCard";
 import MenuHeader from "../../components/MenuHeader/MenuHeader";
+
 import bg1 from "../../assets/bg1.jpg"
-import style from "./style.module.css"
 import { pokemons } from "../../assets/pokemons";
+import style from "./style.module.css"
 
 
-function HomePage({ onChangePage }) {
-	const onClickButton = (page) => {
-		onChangePage && onChangePage(page)
-	}
+function HomePage() {
 
 	return (
 		<>
@@ -19,7 +17,6 @@ function HomePage({ onChangePage }) {
 			<Header
 				title="This is title!"
 				descr="This is description!"
-				onClickButton={onClickButton}
 			/>
 			<Layout
 				title="Some title 1"

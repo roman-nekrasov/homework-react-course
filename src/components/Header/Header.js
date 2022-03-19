@@ -1,11 +1,11 @@
-import style from './style.module.css'	
+import { useNavigate } from 'react-router-dom'
+import style from './style.module.css'
 
-const Header = ({title, descr, onClickButton}) => {
-	// Перевірка, чи прийшли пропси:
-	// console.log("Title: ", title, "Description: ", descr)
+const Header = ({ title, descr }) => {
+	const navigate = useNavigate()
 
 	const handleClick = () => {
-		onClickButton && onClickButton('GamePage')
+		navigate('/game')
 	}
 
 	return (

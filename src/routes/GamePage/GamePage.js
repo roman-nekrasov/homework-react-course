@@ -1,9 +1,15 @@
+import { useNavigate } from 'react-router-dom'
+
 import MenuHeader from '../../components/MenuHeader/MenuHeader'
+import Footer from '../../components/Footer/Footer'
+
 import style from './style.module.css'
 
-const GamePage = ({ onChangePage }) => {
+const GamePage = () => {
+	const navigate = useNavigate()
+
 	const handleClick = () => {
-		onChangePage && onChangePage('HomePage')
+		navigate('/')
 	}
 
 	return (
@@ -11,8 +17,9 @@ const GamePage = ({ onChangePage }) => {
 			<MenuHeader />
 			<div className={style.wrapper}>
 				<div className={style.text}>This is the GamePage!</div>
-				<button className={style["switch-button"]} onClick={handleClick}>Switch to HomePage</button>
+				<button className={style["switch-button"]} onClick={handleClick}>Go to HomePage</button>
 			</div>
+			<Footer />
 		</>
 	)
 }

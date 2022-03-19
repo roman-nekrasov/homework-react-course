@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import style from './style.module.css'
 import cn from 'classnames'
 
@@ -10,24 +11,24 @@ const Menu = ({ isActive, isDeactive }) => {
 				<div className={style.menuItems}>
 					<ul>
 						<li>
-							<a href="#welcome">
+							<Link to="/">
 								HOME
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href="#game">
+							<Link to="/game">
 								GAME
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href="#about">
+							<Link to="/about">
 								ABOUT
-							</a>
+							</Link>
 						</li>
 						<li>
-							<a href="#contact">
+							<Link to="/contact">
 								CONTACT
-							</a>
+							</Link>
 						</li>
 					</ul>
 				</div>
