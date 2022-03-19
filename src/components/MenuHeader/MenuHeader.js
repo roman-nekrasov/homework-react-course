@@ -2,7 +2,7 @@ import { useState } from "react";
 import Menu from "../Menu/Menu";
 import NavBar from "../NavBar/NavBar";
 
-const MenuHeader = () => {
+const MenuHeader = ({ bgActive }) => {
 	const [isActive, setActive] = useState(false)
 	const [isDeactive, setDeactive] = useState(false)
 	const onClickButton = () => {
@@ -12,7 +12,7 @@ const MenuHeader = () => {
 
 	return (
 		<>
-			<NavBar isActive={isActive} onClickButton={onClickButton} />
+			<NavBar isActive={isActive} onClickButton={onClickButton} bgActive={bgActive} />
 			<Menu isActive={isActive} isDeactive={isDeactive} />
 		</>
 	);
