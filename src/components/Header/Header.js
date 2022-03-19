@@ -17,6 +17,8 @@ const Header = ({ title, descr }) => {
 					<p>{descr}</p>
 					<button className={style["switch-button"]} onClick={handleClick}>Let's start the game!</button>
 				</div>
+				<div className={style.silhouette}></div>
+				<div className={style.moon}></div>
 			</header>
 		</>
 	)

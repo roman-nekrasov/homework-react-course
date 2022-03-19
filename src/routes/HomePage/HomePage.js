@@ -15,8 +15,8 @@ function HomePage() {
 		<>
 			<MenuHeader bgActive={false} />
 			<Header
-				title="This is title!"
-				descr="This is description!"
+				title="Pokemon Battle"
+				descr="It will be Mortal combat!"
 			/>
 			<Layout
 				title="Some title 1"
