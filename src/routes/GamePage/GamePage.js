@@ -1,43 +1,49 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+// import { useNavigate } from 'react-router-dom'
 
 import MenuHeader from '../../components/MenuHeader/MenuHeader'
 import Footer from '../../components/Footer/Footer'
-
-import { pokemons } from '../../assets/pokemons'
-import style from './style.module.css'
 import PokemonCard from '../../components/PokemonCard/PokemonCard'
 
+import style from './style.module.css'
+import { dbRef } from '../../service/firebase'
+import { onValue } from 'firebase/database'
+
+
 const GamePage = () => {
-	const navigate = useNavigate()
-	const [cards, setCards] = useState(pokemons)
+	const [cards, setCards] = useState({})
+
+	useEffect(() => {
+		onValue(dbRef, (snapshot) => {
+			setCards(snapshot.val())
+		}, {
+			onlyOnce: true
+		});
+
+	}, [])
 
 	const onClickCard = (id) => {
-		setCards(prevstate => {
-			return Array.from(prevstate, (item) => {
-				if (item.id === id) {
-					item.active = true;
-				}
-				return item
-			})
-		})
-	}
+		setCards(prevState => {
+			return Object.entries(prevState).reduce((acc, item) => {
+				const card = { ...item[1] };
+				if (card.id === id) {
+					card.active = true;
+				};
 
-	const handleClickButton = () => {
-		navigate('/')
+				acc[item[0]] = card;
+
+				return acc;
+			}, {});
+		});
 	}
 
 	return (
 		<>
 			<MenuHeader />
-			<div className={style.wrapper}>
-				<div className={style.text}>This is the GamePage!</div>
-				<button className={style["switch-button"]} onClick={handleClickButton}>Go to HomePage</button>
-			</div>
 			<div className={style.flex}>
 				{
-					cards.map(({ id, type, values, name, img, active }) => <PokemonCard
-						key={id}
+					Object.entries(cards).map(([key, { id, type, values, name, img, active }]) => <PokemonCard
+						key={key}
 						id={id}
 						type={type}
 						values={values}
