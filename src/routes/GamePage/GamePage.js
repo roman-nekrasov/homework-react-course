@@ -10,19 +10,16 @@ import PokemonCard from '../../components/PokemonCard/PokemonCard'
 
 const GamePage = () => {
 	const navigate = useNavigate()
-	const [activeCards, setActiveCards] = useState(cards(pokemons))
-
-	function cards(cards) {
-		const defaultCardsStatus = {}
-		cards.forEach(card => {
-			defaultCardsStatus[card.id] = false
-		})
-		return defaultCardsStatus
-	}
+	const [cards, setCards] = useState(pokemons)
 
 	const onClickCard = (id) => {
-		setActiveCards(prevstate => {
-			return { ...prevstate, ...{ [id]: !prevstate[id] } }
+		setCards(prevstate => {
+			return Array.from(prevstate, (item) => {
+				if (item.id === id) {
+					item.active = true;
+				}
+				return item
+			})
 		})
 	}
 
@@ -39,14 +36,14 @@ const GamePage = () => {
 			</div>
 			<div className={style.flex}>
 				{
-					pokemons.map(item => <PokemonCard
-						key={item.id}
-						id={item.id}
-						type={item.type}
-						values={item.values}
-						name={item.name}
-						img={item.img}
-						isActive={activeCards[item.id]}
+					cards.map(({ id, type, values, name, img, active }) => <PokemonCard
+						key={id}
+						id={id}
+						type={type}
+						values={values}
+						name={name}
+						img={img}
+						isActive={active}
 						onClickCard={onClickCard}
 					/>)
 				}
