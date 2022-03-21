@@ -6,12 +6,13 @@ import Footer from '../../components/Footer/Footer'
 import PokemonCard from '../../components/PokemonCard/PokemonCard'
 
 import style from './style.module.css'
-import { dbRef } from '../../service/firebase'
-import { onValue } from 'firebase/database'
+import { database, dbRef } from '../../service/firebase'
+import { onValue, ref, set } from 'firebase/database'
 
 
 const GamePage = () => {
 	const [cards, setCards] = useState({})
+	const [currentActiveId, setCurrentActiveId] = useState(null)
 
 	useEffect(() => {
 		onValue(dbRef, (snapshot) => {
@@ -19,8 +20,24 @@ const GamePage = () => {
 		}, {
 			onlyOnce: true
 		});
-
 	}, [])
+
+	useEffect(() => {
+		const rewritePokemonData = (id) => {
+			Object.keys(cards).forEach(pokemonKey => {
+				if (cards[pokemonKey].id === id) {
+					set(ref(database, 'pokemons/' + pokemonKey), { ...cards[pokemonKey] })
+						.then(() => {
+							console.log('Active status succesfully added!')
+						})
+						.catch((error) => {
+							console.log('error:', error)
+						})
+				}
+			})
+		}
+		rewritePokemonData(currentActiveId)
+	}, [currentActiveId, cards])
 
 	const onClickCard = (id) => {
 		setCards(prevState => {
@@ -35,6 +52,7 @@ const GamePage = () => {
 				return acc;
 			}, {});
 		});
+		setCurrentActiveId(id)
 	}
 
 	return (
@@ -60,3 +78,34 @@ const GamePage = () => {
 }
 
 export default GamePage
+
+	// const rewritePokemonData = (cards, id) => {
+	// 	Object.keys(cards).forEach(pokemonKey => {
+	// 		if (cards[pokemonKey].id === id) {
+	// 			set(ref(database, 'pokemons/' + pokemonKey), { ...cards[pokemonKey] })
+	// 				.then(() => {
+	// 					console.log('Active status succesfully added!')
+	// 				})
+	// 				.catch((error) => {
+	// 					console.log('error:', error)
+	// 				})
+	// 		}
+	// 	})
+	// }
+
+	// const onClickCard = (id) => {
+	// 	setCards(prevState => {
+	// 		const newState = Object.entries(prevState).reduce((acc, item) => {
+	// 			const card = { ...item[1] };
+	// 			if (card.id === id) {
+	// 				card.active = true;
+	// 			};
+
+	// 			acc[item[0]] = card;
+
+	// 			return acc;
+	// 		}, {});
+	// 		rewritePokemonData(newState, id)
+	// 		return newState
+	// 	});
+	// }
