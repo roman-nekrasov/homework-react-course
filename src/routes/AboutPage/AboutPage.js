@@ -6,9 +6,7 @@ import style from './style.module.css'
 const AboutPage = () => {
 	return (
 		<>
-			<MenuHeader />
 			<div className={style.wrap}>AboutPage</div>
-			<Footer />
 		</>
 	)
 

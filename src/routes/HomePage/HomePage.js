@@ -13,7 +13,6 @@ function HomePage() {
 
 	return (
 		<>
-			<MenuHeader bgActive={false} />
 			<Header
 				title="Pokemon's Battle"
 				descr="It will be Mortal combat!"
@@ -55,8 +54,6 @@ function HomePage() {
 					<p>To win, a majority of the total ten cards played (including the one card that is not placed on the board) must be of the player's card color.</p>
 				</div>
 			</Layout>
-
-			<Footer />
 		</>
 	);
 }

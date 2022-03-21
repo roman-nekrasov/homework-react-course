@@ -29,7 +29,6 @@ const GamePage = () => {
 
 	return (
 		<>
-			<MenuHeader />
 			<div className={style.wrapper}>
 				<div className={style.text}>This is the GamePage!</div>
 				<button className={style["switch-button"]} onClick={handleClickButton}>Go to HomePage</button>
@@ -48,7 +47,6 @@ const GamePage = () => {
 					/>)
 				}
 			</div>
-			<Footer />
 		</>
 	)
 }

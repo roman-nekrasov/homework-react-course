@@ -6,9 +6,7 @@ import style from './style.module.css'
 const ContactPage = () => {
 	return (
 		<>
-			<MenuHeader />
 			<div className={style.wrap}>ContactPage</div>
-			<Footer />
 		</>
 	)
 }
