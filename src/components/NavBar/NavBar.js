@@ -1,19 +1,19 @@
 import style from './style.module.css'
 import cn from 'classnames'
 
-const NavBar = ({ isActive, onClickButton }) => {
+const NavBar = ({ isActive, onClickButton, bgActive = true }) => {
 
 
 	return (
 		<>
-			<nav className={style.root}>
+			<nav className={cn(style.root, { [style.bgActive]: bgActive })}>
 				<div className={style.navWrapper}>
 					<p className={style.brand}>
 						LOGO
 					</p>
-					<a href="/#" onClick={onClickButton} className={cn(style.menuButton, { [style.active]: isActive })}>
+					<div href="/#" onClick={onClickButton} className={cn(style.menuButton, { [style.active]: isActive })}>
 						<span />
-					</a>
+					</div>
 				</div>
 			</nav>
 		</>

@@ -2,8 +2,8 @@
 .menuContainer.active > .overlay {
   position: absolute;
   right: 0;
-  height: calc( 100vh - 120px );
-  width: calc( 100vw - 120px );
+  height: calc(100vh - 120px);
+  width: calc(100vw - 120px);
   background: #fafafa;
 }
 
@@ -13,7 +13,7 @@
 
 @keyframes overlay-slide-in {
   from {
-    width: calc( 100vw - 120px );
+    width: calc(100vw - 120px);
   }
   to {
     width: 0;
@@ -31,7 +31,7 @@
   }
   to {
     left: 0;
-    width: calc( 100vw - 120px );
+    width: calc(100vw - 120px);
   }
 }
 
@@ -46,11 +46,13 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  opacity: 0;
+  z-index: -1;
 }
 
 .menuContainer::before,
 .menuContainer::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   min-height: 100vh;
@@ -62,7 +64,8 @@
 }
 
 .menuContainer::after {
-  background: url(https://raw.githubusercontent.com/yagoestevez/fcc-portfolio/master/src/Images/Trees.svg?sanitize=true) bottom repeat-x;
+  background: url(https://raw.githubusercontent.com/yagoestevez/fcc-portfolio/master/src/Images/Trees.svg?sanitize=true)
+    bottom repeat-x;
 }
 
 .menuContainer.deactive {
@@ -139,24 +142,24 @@
 
 /***** Menu Items: Hover Animation *****/
 .menuContainer ul li {
-  border-left: .2rem solid transparent;
+  border-left: 0.2rem solid transparent;
   transition: border-left 200ms;
 }
 
 .menuContainer ul li a {
-  font-size: 3rem; 
-  padding-left: .5rem;
+  font-size: 3rem;
+  padding-left: 0.5rem;
 }
 
 .menuContainer ul li a::after {
-  content: ' »';
+  content: " »";
   font-size: 2.5rem;
   color: transparent;
   transition: color 200ms;
 }
 
 .menuContainer ul li a:hover::after {
-  content: ' »';
+  content: " »";
   color: #f300b4;
 }
 
@@ -180,11 +183,11 @@
     height: 100vh;
     width: 100vw;
   }
-  
+
   .menuContainer.active > .overlay {
     animation: overlay-slide-in 300ms forwards 300ms;
   }
-  
+
   @keyframes overlay-slide-in {
     from {
       width: 100vw;
@@ -193,11 +196,11 @@
       width: 0;
     }
   }
-  
+
   .menu-container > .overlay {
     animation: overlay-slide-out 300ms forwards;
   }
-  
+
   @keyframes overlay-slide-out {
     from {
       left: 0;

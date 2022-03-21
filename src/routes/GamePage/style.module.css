@@ -1,5 +1,4 @@
 .wrapper {
-	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -21,4 +20,11 @@
 
 .switch-button:hover {
 	background-color: rgb(220, 57, 206);
+}
+
+.flex {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
 }
