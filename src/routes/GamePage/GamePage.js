@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import MenuHeader from '../../components/MenuHeader/MenuHeader'
-import Footer from '../../components/Footer/Footer'
+import PokemonCard from '../../components/PokemonCard/PokemonCard'
 
 import { pokemons } from '../../assets/pokemons'
 import style from './style.module.css'
-import PokemonCard from '../../components/PokemonCard/PokemonCard'
+
 
 const GamePage = () => {
 	const navigate = useNavigate()
