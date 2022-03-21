@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 
-import AppLayout from "./components/AppLayout"
+import AppLayout from "./components/AppLayout/AppLayout"
 import HomePage from "./routes/HomePage/HomePage"
 import GamePage from "./routes/GamePage/GamePage"
 import AboutPage from "./routes/AboutPage/AboutPage"
