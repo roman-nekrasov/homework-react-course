@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 // import { useNavigate } from 'react-router-dom'
 
-import MenuHeader from '../../components/MenuHeader/MenuHeader'
-import Footer from '../../components/Footer/Footer'
 import PokemonCard from '../../components/PokemonCard/PokemonCard'
 
-import style from './style.module.css'
 import { database, dbRef } from '../../service/firebase'
 import { onValue, ref, set, push } from 'firebase/database'
+import style from './style.module.css'
 
 
 const GamePage = () => {
@@ -74,7 +72,6 @@ const GamePage = () => {
 
 	return (
 		<>
-			<MenuHeader />
 			<div className={style.wrapper}>
 				<button className={style['switch-button']} onClick={addNewPokemon}>Add new Pokemon</button>
 				<div className={style.flex}>
@@ -92,7 +89,6 @@ const GamePage = () => {
 					}
 				</div>
 			</div>
-			<Footer />
 		</>
 	)
 }

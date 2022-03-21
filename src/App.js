@@ -1,5 +1,6 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 
+import AppLayout from "./components/AppLayout/AppLayout"
 import HomePage from "./routes/HomePage/HomePage"
 import GamePage from "./routes/GamePage/GamePage"
 import AboutPage from "./routes/AboutPage/AboutPage"
@@ -10,11 +11,14 @@ const App = () => {
 
 	return (
 		<Routes>
-			<Route path="/" element={<HomePage />} />
-			<Route path="/game" element={<GamePage />} />
-			<Route path="/about" element={<AboutPage />} />
-			<Route path="/contact" element={<ContactPage />} />
-			<Route path="*" element={<NotFound />} />
+			<Route path='/' element={<AppLayout />}>
+				<Route index element={<HomePage />} />
+				<Route path="/game" element={<GamePage />} />
+				<Route path="/about" element={<AboutPage />} />
+				<Route path="/contact" element={<ContactPage />} />
+				<Route path="*" element={<Navigate to="/404" replace />} />
+			</Route>
+			<Route path="/404" element={<NotFound />} />
 		</Routes>
 	)
 }

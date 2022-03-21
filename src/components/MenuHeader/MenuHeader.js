@@ -3,17 +3,15 @@ import Menu from "../Menu/Menu";
 import NavBar from "../NavBar/NavBar";
 
 const MenuHeader = ({ bgActive }) => {
-	const [isActive, setActive] = useState(false)
-	const [isDeactive, setDeactive] = useState(false)
+	const [isActive, setActive] = useState(null)
 	const onClickButton = () => {
-		setActive(!isActive);
-		setDeactive(isActive);
+		setActive(prevState => !prevState);
 	};
 
 	return (
 		<>
 			<NavBar isActive={isActive} onClickButton={onClickButton} bgActive={bgActive} />
-			<Menu isActive={isActive} isDeactive={isDeactive} />
+			<Menu isActive={isActive} onClickButton={onClickButton} />
 		</>
 	);
 };

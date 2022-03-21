@@ -1,8 +1,6 @@
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
-import Footer from "../../components/Footer/Footer";
 import PokemonCard from "../../components/PokemonCard/PokemonCard";
-import MenuHeader from "../../components/MenuHeader/MenuHeader";
 
 import bg1 from "../../assets/bg1.jpg"
 import { pokemons } from "../../assets/pokemons";
@@ -13,7 +11,6 @@ function HomePage() {
 
 	return (
 		<>
-			<MenuHeader bgActive={false} />
 			<Header
 				title="Pokemon's Battle"
 				descr="It will be Mortal combat!"
@@ -55,8 +52,6 @@ function HomePage() {
 					<p>To win, a majority of the total ten cards played (including the one card that is not placed on the board) must be of the player's card color.</p>
 				</div>
 			</Layout>
-
-			<Footer />
 		</>
 	);
 }
