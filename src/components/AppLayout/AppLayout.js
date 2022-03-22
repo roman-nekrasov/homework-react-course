@@ -10,9 +10,9 @@ const AppLayout = () => {
 
 	return (
 		<>
-			<MenuHeader bgActive={isHomePage === null ? true : false} />
+			<MenuHeader bgActive={isHomePage === null} />
 			<main>
-				<div className={cn(style.wrap, { [style.isHomePage]: isHomePage === null ? false : true })}>
+				<div className={cn(style.wrap, { [style.isHomePage]: isHomePage !== null })}>
 					<Outlet />
 				</div>
 			</main>

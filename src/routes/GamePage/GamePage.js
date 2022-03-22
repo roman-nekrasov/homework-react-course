@@ -59,7 +59,7 @@ const GamePage = () => {
 			return Object.entries(prevState).reduce((acc, item) => {
 				const card = { ...item[1] };
 				if (card.id === id) {
-					card.active = true;
+					card.active = !card.active;
 				};
 
 				acc[item[0]] = card;
