@@ -5,7 +5,7 @@ import PokemonCard from '../../../../components/PokemonCard/PokemonCard'
 
 import { PokemonContext } from '../../../../context/pokemonContext'
 import { dbRef } from '../../../../service/firebase'
-import { onValue, set, push } from 'firebase/database'
+import { onValue } from 'firebase/database'
 import style from './style.module.css'
 
 
@@ -20,23 +20,6 @@ const StartPage = () => {
 			onlyOnce: true
 		});
 	}, [])
-
-	const addNewPokemon = () => {
-		const newPokemonRef = push(dbRef);
-		const randomPokemon = () => {
-			const index = Math.floor(Math.random() * (Object.keys(cards).length + 1));
-			const pokemon = cards[Object.keys(cards)[index]];
-			pokemon.active = false;
-			return pokemon
-		}
-		const newPokemon = randomPokemon()
-		set(newPokemonRef, { ...newPokemon })
-		onValue(dbRef, (snapshot) => {
-			setCards(snapshot.val())
-		}, {
-			onlyOnce: true
-		});
-	}
 
 	const onClickCard = (dbKey) => {
 		setCards(prevState => {
@@ -57,8 +40,7 @@ const StartPage = () => {
 	return (
 		<>
 			<div className={style.wrapper}>
-				<button className={style['switch-button']} onClick={addNewPokemon}>Add new Pokemon</button>
-				<Link to={'board'}>To board</Link>
+				<Link className={style['game-button']} to={'board'}>START GAME</Link>
 				<div className={style.flex}>
 					{
 						Object.entries(cards).map(([key, { id, type, values, name, img, active, selected }]) => <PokemonCard

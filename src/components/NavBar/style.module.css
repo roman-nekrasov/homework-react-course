@@ -23,7 +23,7 @@
 .root .brand {
 	font-size: 1.6rem;
 	color: #fafafa;
-	cursor: default;
+	cursor: pointer;
 }
 
 /***** Menu Button *****/

@@ -7,7 +7,6 @@ import style from './style.module.css';
 
 const BoardPage = () => {
 	const pokemonsContext = useContext(PokemonContext)
-	console.log(pokemonsContext)
 
 	return (
 		<div className={style.root}>

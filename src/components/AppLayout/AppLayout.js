@@ -7,12 +7,14 @@ import cn from 'classnames'
 
 const AppLayout = () => {
 	const isHomePage = useMatch('/')
+	const isBoardPage = useMatch('/game/board')
+	console.log(isBoardPage)
 
 	return (
 		<>
-			<MenuHeader bgActive={isHomePage === null} />
+			<MenuHeader bgActive={isHomePage === null && isBoardPage === null} />
 			<main>
-				<div className={cn(style.wrap, { [style.isHomePage]: isHomePage !== null })}>
+				<div className={cn(style.wrap, { [style.fullscreen]: isHomePage !== null || isBoardPage !== null })}>
 					<Outlet />
 				</div>
 			</main>
