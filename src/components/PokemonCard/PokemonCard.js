@@ -2,11 +2,12 @@ import style from './style.module.css'
 import cardBack from '../../assets/card-back-side.jpg'
 import cn from 'classnames'
 
-const PokemonCard = ({ type, values, id, name, img, isActive = true, onClickCard, minimize, className }) => {
+const PokemonCard = ({ type, values, id, dbKey, name, img, isActive, onClickCard, minimize, className, isSelected }) => {
 
 	return (
 		<>
-			<div className={cn(className, style.pokemonCard, { [style.active]: isActive })}>
+			<div className={cn(className, style.pokemonCard, { [style.active]: isActive, [style.selected]: isSelected })}
+				onClick={() => onClickCard(dbKey)}>
 				<div className={style.cardFront}>
 					<div className={cn(style.wrap, style.front)}>
 						<div className={cn(style.pokemon, style.type)}>

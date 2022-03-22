@@ -1,16 +1,17 @@
-import { useState, useEffect } from 'react'
-// import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useContext, } from 'react'
+import { Link } from 'react-router-dom'
 
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard'
 
-import { database, dbRef } from '../../../../service/firebase'
-import { onValue, ref, set, push } from 'firebase/database'
+import { PokemonContext } from '../../../../context/pokemonContext'
+import { dbRef } from '../../../../service/firebase'
+import { onValue, set, push } from 'firebase/database'
 import style from './style.module.css'
 
 
 const StartPage = () => {
 	const [cards, setCards] = useState({})
-	const [currentActiveId, setCurrentActiveId] = useState(null)
+	const pokemonContext = useContext(PokemonContext)
 
 	useEffect(() => {
 		onValue(dbRef, (snapshot) => {
@@ -19,23 +20,6 @@ const StartPage = () => {
 			onlyOnce: true
 		});
 	}, [])
-
-	useEffect(() => {
-		const rewritePokemonData = (id) => {
-			Object.keys(cards).forEach(pokemonKey => {
-				if (cards[pokemonKey].id === id) {
-					set(ref(database, 'pokemons/' + pokemonKey), { ...cards[pokemonKey] })
-						.then(() => {
-							console.log('Active status succesfully added!')
-						})
-						.catch((error) => {
-							console.log('error:', error)
-						})
-				}
-			})
-		}
-		rewritePokemonData(currentActiveId)
-	}, [currentActiveId, cards])
 
 	const addNewPokemon = () => {
 		const newPokemonRef = push(dbRef);
@@ -54,12 +38,12 @@ const StartPage = () => {
 		});
 	}
 
-	const onClickCard = (id) => {
+	const onClickCard = (dbKey) => {
 		setCards(prevState => {
 			return Object.entries(prevState).reduce((acc, item) => {
 				const card = { ...item[1] };
-				if (card.id === id) {
-					card.active = !card.active;
+				if (item[0] === dbKey) {
+					card.selected = true
 				};
 
 				acc[item[0]] = card;
@@ -67,23 +51,26 @@ const StartPage = () => {
 				return acc;
 			}, {});
 		});
-		setCurrentActiveId(id)
+		pokemonContext.onSelect(cards[dbKey], dbKey)
 	}
 
 	return (
 		<>
 			<div className={style.wrapper}>
 				<button className={style['switch-button']} onClick={addNewPokemon}>Add new Pokemon</button>
+				<Link to={'board'}>To board</Link>
 				<div className={style.flex}>
 					{
-						Object.entries(cards).map(([key, { id, type, values, name, img, active }]) => <PokemonCard
+						Object.entries(cards).map(([key, { id, type, values, name, img, active, selected }]) => <PokemonCard
 							key={key}
+							dbKey={key}
 							id={id}
 							type={type}
 							values={values}
 							name={name}
 							img={img}
 							isActive={active}
+							isSelected={selected}
 							onClickCard={onClickCard}
 						/>)
 					}
