@@ -51,6 +51,7 @@ const StartPage = () => {
 							values={values}
 							name={name}
 							img={img}
+							className={style.fullsize}
 							isActive={active}
 							isSelected={selected}
 							onClickCard={onClickCard}

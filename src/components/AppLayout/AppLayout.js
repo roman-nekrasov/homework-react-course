@@ -8,7 +8,6 @@ import cn from 'classnames'
 const AppLayout = () => {
 	const isHomePage = useMatch('/')
 	const isBoardPage = useMatch('/game/board')
-	console.log(isBoardPage)
 
 	return (
 		<>

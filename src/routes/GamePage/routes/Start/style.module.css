@@ -34,3 +34,10 @@
 	flex-wrap: wrap;
 	padding: 96px 32px 24px;
 }
+
+.fullsize {
+	width: 268px;
+	height: 388px;
+	margin: 16px;
+	perspective: 1000px;
+}
