@@ -11,6 +11,8 @@ const BoardPage = () => {
 	const navigate = useNavigate()
 	const pokemonsContext = useContext(PokemonContext)
 
+	console.log(pokemonsContext);
+
 	return (
 		<div className={style.root}>
 			<div className={style.playerOne}>

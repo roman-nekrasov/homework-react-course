@@ -5,19 +5,29 @@ import { PokemonContext } from "../../context/pokemonContext"
 const GamePage = () => {
 	const [selectedPokemons, setSelectedPokemons] = useState([])
 
-	const handleSelectPokemons = (pokemon, dbKey) => {
+	const handleSelectPokemons = (pokemon, dbKey, isSelected) => {
 		setSelectedPokemons(prevState => {
-			pokemon.dbKey = dbKey
-			prevState.push(pokemon)
-			return prevState
+			if (isSelected) {
+				pokemon.dbKey = dbKey
+				return [...prevState, pokemon]
+			} else {
+				const pokemons = prevState.filter(item => item.dbKey !== dbKey)
+				return [...pokemons]
+			}
 		})
+	}
+
+	const handleCLearPokemons = () => {
+		setSelectedPokemons([])
 	}
 
 	return (
 		<>
 			<PokemonContext.Provider value={{
 				selectedPokemons,
-				onSelect: handleSelectPokemons
+				newGame: null,
+				onSelect: handleSelectPokemons,
+				onStartGame: handleCLearPokemons,
 			}}>
 				<Outlet />
 			</PokemonContext.Provider>

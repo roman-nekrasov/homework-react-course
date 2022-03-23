@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard'
 
@@ -19,12 +19,21 @@ const StartPage = () => {
 
 	const pokemonContext = useContext(PokemonContext)
 
-	useEffect(() => {
+	const getPokeons = (dbRef) => {
 		onValue(dbRef, (snapshot) => {
 			setCards(snapshot.val())
 		}, {
 			onlyOnce: true
 		});
+	}
+
+	const startGame = () => {
+		pokemonContext.newGame = true;
+		navigate('board')
+	}
+
+	useEffect(() => {
+		getPokeons(dbRef)
 	}, [])
 
 	useEffect(() => {
@@ -36,6 +45,10 @@ const StartPage = () => {
 	}, [cards])
 
 	const onClickCard = (dbKey) => {
+		if (pokemonContext.newGame) {
+			pokemonContext.onStartGame()
+			pokemonContext.newGame = false
+		}
 		if (remainingCards || cards[dbKey].selected) {
 			setCards(prevState => {
 				return Object.entries(prevState).reduce((acc, item) => {
@@ -49,7 +62,8 @@ const StartPage = () => {
 					return acc;
 				}, {});
 			});
-			pokemonContext.onSelect(cards[dbKey], dbKey)
+			const isSelected = !cards[dbKey].selected
+			pokemonContext.onSelect(cards[dbKey], dbKey, isSelected)
 		}
 	}
 
@@ -61,7 +75,7 @@ const StartPage = () => {
 						<h2 className={style.title}>Let's choose <span>{remainingCards}</span> more pokemons to start!</h2> :
 						<h2 className={style.title}>Let's start the GAME!</h2>
 				}
-				<button className={cn(style['game-button'], { [style.disabled]: remainingCards })} onClick={() => navigate('board')} disabled={remainingCards}>START GAME</button>
+				<button className={cn(style['game-button'], { [style.disabled]: remainingCards })} onClick={() => startGame()} disabled={remainingCards}>START GAME</button>
 				<div className={style.flex}>
 					{
 						Object.entries(cards).map(([key, { id, type, values, name, img, active, selected }]) => <PokemonCard
