@@ -15,5 +15,3 @@ export const fire = initializeApp(firebaseConfig);
 
 export const database = getDatabase();
 export const dbRef = ref(database, 'pokemons');
-
-

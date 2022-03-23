@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-// import { useNavigate } from 'react-router-dom'
 
 import PokemonCard from '../../components/PokemonCard/PokemonCard'
 
@@ -10,32 +9,32 @@ import style from './style.module.css'
 
 const GamePage = () => {
 	const [cards, setCards] = useState({})
-	const [currentActiveId, setCurrentActiveId] = useState(null)
 
-	useEffect(() => {
+	const getPokeons = (dbRef) => {
 		onValue(dbRef, (snapshot) => {
 			setCards(snapshot.val())
 		}, {
 			onlyOnce: true
 		});
-	}, [])
+	}
 
 	useEffect(() => {
-		const rewritePokemonData = (id) => {
-			Object.keys(cards).forEach(pokemonKey => {
-				if (cards[pokemonKey].id === id) {
-					set(ref(database, 'pokemons/' + pokemonKey), { ...cards[pokemonKey] })
-						.then(() => {
-							console.log('Active status succesfully added!')
-						})
-						.catch((error) => {
-							console.log('error:', error)
-						})
-				}
-			})
-		}
-		rewritePokemonData(currentActiveId)
-	}, [currentActiveId, cards])
+		getPokeons(dbRef)
+	}, [])
+
+	const rewritePokemonData = (cards, id) => {
+		Object.keys(cards).forEach(pokemonKey => {
+			if (cards[pokemonKey].id === id) {
+				set(ref(database, 'pokemons/' + pokemonKey), { ...cards[pokemonKey] })
+					.then(() => {
+						console.log('Active status succesfully added!')
+					})
+					.catch((error) => {
+						console.log('error:', error)
+					})
+			}
+		})
+	}
 
 	const addNewPokemon = () => {
 		const newPokemonRef = push(dbRef);
@@ -67,7 +66,10 @@ const GamePage = () => {
 				return acc;
 			}, {});
 		});
-		setCurrentActiveId(id)
+		setCards(prevState => {
+			rewritePokemonData(prevState, id)
+			return prevState
+		})
 	}
 
 	return (
@@ -94,34 +96,3 @@ const GamePage = () => {
 }
 
 export default GamePage
-
-	// const rewritePokemonData = (cards, id) => {
-	// 	Object.keys(cards).forEach(pokemonKey => {
-	// 		if (cards[pokemonKey].id === id) {
-	// 			set(ref(database, 'pokemons/' + pokemonKey), { ...cards[pokemonKey] })
-	// 				.then(() => {
-	// 					console.log('Active status succesfully added!')
-	// 				})
-	// 				.catch((error) => {
-	// 					console.log('error:', error)
-	// 				})
-	// 		}
-	// 	})
-	// }
-
-	// const onClickCard = (id) => {
-	// 	setCards(prevState => {
-	// 		const newState = Object.entries(prevState).reduce((acc, item) => {
-	// 			const card = { ...item[1] };
-	// 			if (card.id === id) {
-	// 				card.active = true;
-	// 			};
-
-	// 			acc[item[0]] = card;
-
-	// 			return acc;
-	// 		}, {});
-	// 		rewritePokemonData(newState, id)
-	// 		return newState
-	// 	});
-	// }
