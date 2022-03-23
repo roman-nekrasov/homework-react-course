@@ -1,16 +1,22 @@
 import { useState, useEffect, useContext, } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard'
 
 import { PokemonContext } from '../../../../context/pokemonContext'
 import { dbRef } from '../../../../service/firebase'
 import { onValue } from 'firebase/database'
+
 import style from './style.module.css'
+import cn from 'classnames'
 
 
 const StartPage = () => {
 	const [cards, setCards] = useState({})
+	const [remainingCards, setRemainingCards] = useState(5)
+
+	const navigate = useNavigate()
+
 	const pokemonContext = useContext(PokemonContext)
 
 	useEffect(() => {
@@ -21,26 +27,41 @@ const StartPage = () => {
 		});
 	}, [])
 
+	useEffect(() => {
+		if (Object.keys(cards).length) {
+			setRemainingCards(() => {
+				return (5 - Object.values(cards).filter(card => card.selected).length)
+			})
+		}
+	}, [cards])
+
 	const onClickCard = (dbKey) => {
-		setCards(prevState => {
-			return Object.entries(prevState).reduce((acc, item) => {
-				const card = { ...item[1] };
-				if (item[0] === dbKey) {
-					card.selected = true
-				};
+		if (remainingCards || cards[dbKey].selected) {
+			setCards(prevState => {
+				return Object.entries(prevState).reduce((acc, item) => {
+					const card = { ...item[1] };
+					if (item[0] === dbKey) {
+						card.selected = !card.selected
+					};
 
-				acc[item[0]] = card;
+					acc[item[0]] = card;
 
-				return acc;
-			}, {});
-		});
-		pokemonContext.onSelect(cards[dbKey], dbKey)
+					return acc;
+				}, {});
+			});
+			pokemonContext.onSelect(cards[dbKey], dbKey)
+		}
 	}
 
 	return (
 		<>
 			<div className={style.wrapper}>
-				<Link className={style['game-button']} to={'board'}>START GAME</Link>
+				{
+					remainingCards ?
+						<h2 className={style.title}>Let's choose <span>{remainingCards}</span> more pokemons to start!</h2> :
+						<h2 className={style.title}>Let's start the GAME!</h2>
+				}
+				<button className={cn(style['game-button'], { [style.disabled]: remainingCards })} onClick={() => navigate('board')} disabled={remainingCards}>START GAME</button>
 				<div className={style.flex}>
 					{
 						Object.entries(cards).map(([key, { id, type, values, name, img, active, selected }]) => <PokemonCard

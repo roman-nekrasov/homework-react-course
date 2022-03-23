@@ -20,6 +20,17 @@
 	transition: background-color 0.3s ease;
 	text-transform: uppercase;
 	color: #000;
+	font-size: 24px;
+	font-family: "Overlock", Arial, Helvetica, sans-serif;
+}
+
+.game-button.disabled {
+	opacity: 0.5;
+}
+
+.game-button.disabled:hover {
+	opacity: 0.5;
+	transform: none;
 }
 
 .game-button:hover {
@@ -40,4 +51,13 @@
 	height: 388px;
 	margin: 16px;
 	perspective: 1000px;
+}
+
+.title {
+	font-size: 28px;
+	margin-bottom: 20px;
+}
+
+.title > span {
+	text-decoration: underline;
 }

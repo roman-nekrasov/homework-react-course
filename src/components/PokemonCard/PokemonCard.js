@@ -9,7 +9,7 @@ const PokemonCard = ({ type, values, id, dbKey, name, img, isActive, onClickCard
 			<div className={cn(className, style.pokemonCard, { [style.active]: isActive, [style.selected]: isSelected })}
 				onClick={() => onClickCard(dbKey)}>
 				<div className={style.cardFront}>
-					<div className={cn(style.wrap, style.front)}>
+					<div className={cn(style.wrap, style.front, { [style.selected]: isSelected })}>
 						<div className={cn(style.pokemon, style.type)}>
 							<div className={style.values}>
 								<div className={cn(style.count, style.top)}>{values.top}</div>
