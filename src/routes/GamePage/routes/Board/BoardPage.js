@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PokemonContext } from '../../../../context/pokemonContext';
@@ -9,15 +9,19 @@ import style from './style.module.css';
 
 const BoardPage = () => {
 	const navigate = useNavigate()
-	const pokemonsContext = useContext(PokemonContext)
+	const { selectedPokemons } = useContext(PokemonContext)
 
-	console.log(pokemonsContext);
+	useEffect(() => {
+		if (Object.keys(selectedPokemons).length === 0) {
+			navigate('/game')
+		}
+	})
 
 	return (
 		<div className={style.root}>
 			<div className={style.playerOne}>
 				{
-					pokemonsContext.selectedPokemons.map(({ dbKey, id, type, values, name, img, active }) => <PokemonCard
+					selectedPokemons.map(({ dbKey, id, type, values, name, img, active }) => <PokemonCard
 						key={dbKey}
 						id={id}
 						type={type}
