@@ -1,0 +1,18 @@
+.cardBoard {
+	width: 100%;
+	max-width: 18vw;
+	height: 14.8vw;
+	margin-top: -6vw;
+}
+
+.cardBoard:first-child {
+	margin-top: 0;
+}
+
+.cardBoard.isSelected {
+	margin-left: -20px;
+}
+
+.cardBoard.isSelected.left {
+	margin-left: 20px;
+}

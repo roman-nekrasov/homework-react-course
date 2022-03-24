@@ -4,12 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { PokemonContext } from '../../../../context/pokemonContext';
 
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard';
+import PlayerBoard from './component/PlayerBoard'
 
 import style from './style.module.css';
 
 const BoardPage = () => {
 	const [board, setBoard] = useState([])
 	const [player2, setPlayer2] = useState([])
+	const [chosedCard, setChosedCard] = useState(null)
+
 	const navigate = useNavigate()
 	const { selectedPokemons } = useContext(PokemonContext)
 
@@ -44,24 +47,16 @@ const BoardPage = () => {
 
 	const onClickBoard = (position) => {
 		console.log('####: position', position);
+		console.log("####: chosedCard", chosedCard);
 	}
 
 	return (
 		<div className={style.root}>
 			<div className={style.playerOne}>
-				{
-					selectedPokemons.map(({ dbKey, id, type, values, name, img, active }) => <PokemonCard
-						key={dbKey}
-						id={id}
-						type={type}
-						values={values}
-						name={name}
-						img={img}
-						isActive={active}
-						minimize={true}
-						className={style.card}
-					/>)
-				}
+				<PlayerBoard
+					cards={selectedPokemons}
+					onClickCard={(card) => setChosedCard(card)}
+					left={true} />
 			</div>
 			<div className={style.board}>
 				{
@@ -79,22 +74,13 @@ const BoardPage = () => {
 				}
 			</div>
 			<div className={style.playerTwo} >
-				{
-					player2.map(({ id, type, values, name, img }) => <PokemonCard
-						key={id}
-						id={id}
-						type={type}
-						values={values}
-						name={name}
-						img={img}
-						isActive
-						minimize={true}
-						className={style.card}
-					/>)
-				}
+				<PlayerBoard
+					cards={player2}
+					onClickCard={(card) => setChosedCard(card)}
+				/>
 			</div>
 
-			<button className={style['game-button']} onClick={() => navigate('/game')} >Choose another pokemons</button>
+			<button className={style['game-button']} onClick={() => navigate('/game')} >START NEW GAME</button>
 		</div>
 	);
 };
