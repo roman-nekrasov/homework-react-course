@@ -11,24 +11,24 @@ import style from './style.module.css';
 const BOARD_URL = 'https://reactmarathon-api.netlify.app/api/board';
 const PLAYER2_URL = 'https://reactmarathon-api.netlify.app/api/create-player';
 
-const counterWin = (board, player1, player2) => {
-	let countPlayer1 = player1.length;
-	let countPlayer2 = player2.length;
+// const counterWin = (board, player1, player2) => {
+// 	let countPlayer1 = player1.length;
+// 	let countPlayer2 = player2.length;
 
-	board.forEach(item => {
-		if (item.card.possession === 'blue') {
-			countPlayer1++
-		}
-		if (item.card.possession === 'red') {
-			countPlayer2++
-		}
-	})
-	return [countPlayer1, countPlayer2]
-}
+// 	board.forEach(item => {
+// 		if (item.card.possession === 'blue') {
+// 			countPlayer1++
+// 		}
+// 		if (item.card.possession === 'red') {
+// 			countPlayer2++
+// 		}
+// 	})
+// 	return [countPlayer1, countPlayer2]
+// }
 
 
 const BoardPage = () => {
-	const { selectedPokemons, onFinishGame } = useContext(PokemonContext)
+	const { selectedPokemons, onFinishGame, onWin } = useContext(PokemonContext)
 
 	const [board, setBoard] = useState([])
 	const [startCards, setStartCards] = useState([])
@@ -45,8 +45,6 @@ const BoardPage = () => {
 	const [count, setCount] = useState(0)
 
 	const navigate = useNavigate()
-
-
 
 	useEffect(() => {
 		if (Object.keys(selectedPokemons).length === 0) {
@@ -111,19 +109,19 @@ const BoardPage = () => {
 
 	useEffect(() => {
 		if (count === 9) {
-			const [count1, count2] = counterWin(board, player1, player2)
+			// const [count1, count2] = counterWin(board, player1, player2)
+			// if (count1 > count2) {
+
+			// } else if (count1 < count2) {
+			// 	console.log('Player 2 win');
+			// } else {
+			// 	console.log('Draw');
+			// }
+			onWin(true);
 			onFinishGame(startCards)
 			navigate('/game/finish')
-
-			if (count1 > count2) {
-				console.log('Player 1 win');
-			} else if (count1 < count2) {
-				console.log('Player 2 win');
-			} else {
-				console.log('Draw');
-			}
 		}
-	}, [count, board, player1, player2, navigate, onFinishGame, startCards])
+	}, [count, board, player1, player2, navigate, onFinishGame, startCards, onWin])
 
 	useEffect(() => {
 		if (player1.length === 5 && player2.length === 5) {

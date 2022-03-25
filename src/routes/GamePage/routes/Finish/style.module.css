@@ -37,3 +37,7 @@
 	max-width: 18vw;
 	height: 14.8vw;
 }
+
+.opponent.achived {
+	margin-top: -40px;
+}
