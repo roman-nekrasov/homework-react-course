@@ -19,7 +19,7 @@ const StartPage = () => {
 
 	const pokemonContext = useContext(PokemonContext)
 
-	const getPokeons = (dbRef) => {
+	const getPokemons = (dbRef) => {
 		onValue(dbRef, (snapshot) => {
 			setCards(snapshot.val())
 		}, {
@@ -33,7 +33,7 @@ const StartPage = () => {
 	}
 
 	useEffect(() => {
-		getPokeons(dbRef)
+		getPokemons(dbRef)
 	}, [])
 
 	useEffect(() => {

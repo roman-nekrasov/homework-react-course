@@ -4,6 +4,7 @@ import { PokemonContext } from "../../context/pokemonContext"
 
 const GamePage = () => {
 	const [selectedPokemons, setSelectedPokemons] = useState([])
+	const [playersCards, setplayersCards] = useState([])
 
 	const handleSelectPokemons = (pokemon, dbKey, isSelected) => {
 		setSelectedPokemons(prevState => {
@@ -21,13 +22,19 @@ const GamePage = () => {
 		setSelectedPokemons([])
 	}
 
+	const handlePlayersCards = (cards) => {
+		setplayersCards(cards)
+	}
+
 	return (
 		<>
 			<PokemonContext.Provider value={{
 				selectedPokemons,
+				playersCards,
 				newGame: null,
 				onSelect: handleSelectPokemons,
 				onStartGame: handleCLearPokemons,
+				onFinishGame: handlePlayersCards,
 			}}>
 				<Outlet />
 			</PokemonContext.Provider>

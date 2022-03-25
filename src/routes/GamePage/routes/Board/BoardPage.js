@@ -26,10 +26,12 @@ const counterWin = (board, player1, player2) => {
 	return [countPlayer1, countPlayer2]
 }
 
+
 const BoardPage = () => {
-	const { selectedPokemons } = useContext(PokemonContext)
+	const { selectedPokemons, onFinishGame } = useContext(PokemonContext)
 
 	const [board, setBoard] = useState([])
+	const [startCards, setStartCards] = useState([])
 	const [player1, setPlayer1] = useState(() => {
 		return Object.values(selectedPokemons).map(item => {
 			return {
@@ -62,12 +64,14 @@ const BoardPage = () => {
 
 				const player2Response = await fetch(PLAYER2_URL);
 				const player2Request = await player2Response.json();
-				if (isMounted) setPlayer2(() => {
-					return player2Request.data.map(item => ({
-						...item,
-						possession: 'red'
-					}))
-				});
+				if (isMounted) {
+					setPlayer2(() => {
+						return player2Request.data.map(item => ({
+							...item,
+							possession: 'red'
+						}))
+					})
+				};
 			} catch (e) {
 				console.error(e);
 			}
@@ -108,6 +112,8 @@ const BoardPage = () => {
 	useEffect(() => {
 		if (count === 9) {
 			const [count1, count2] = counterWin(board, player1, player2)
+			onFinishGame(startCards)
+			navigate('/game/finish')
 
 			if (count1 > count2) {
 				console.log('Player 1 win');
@@ -117,7 +123,13 @@ const BoardPage = () => {
 				console.log('Draw');
 			}
 		}
-	}, [count, board, player1, player2])
+	}, [count, board, player1, player2, navigate, onFinishGame, startCards])
+
+	useEffect(() => {
+		if (player1.length === 5 && player2.length === 5) {
+			setStartCards([player1, player2])
+		}
+	}, [player1, player2])
 
 	return (
 		<div className={style.root}>

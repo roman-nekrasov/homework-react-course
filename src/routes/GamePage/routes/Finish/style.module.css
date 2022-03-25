@@ -1,0 +1,39 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: calc(100vh - 120px);
+}
+
+.playercards {
+	display: flex;
+	gap: 20px;
+	height: 14.8vw;
+}
+
+.game-button {
+	display: block;
+	height: 5vh;
+	margin: 10px auto;
+	transform: translateX(-50%);
+	padding: 10px 15px;
+	margin: 0 auto;
+	border-radius: 4px;
+	border: none;
+	background-color: rgb(220, 57, 206);
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	text-transform: uppercase;
+	color: #000;
+}
+
+.game-button:hover {
+	color: #000;
+	background-color: rgb(253, 85, 239);
+}
+
+.card {
+	width: 18vw;
+	max-width: 18vw;
+	height: 14.8vw;
+}
