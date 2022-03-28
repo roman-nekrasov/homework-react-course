@@ -19,10 +19,6 @@ const GamePage = () => {
 		})
 	}
 
-	const handleCLearPokemons = () => {
-		setSelectedPokemons([])
-	}
-
 	const handlePlayersCards = (cards) => {
 		setplayersCards(cards)
 	}
@@ -34,6 +30,7 @@ const GamePage = () => {
 	const handleEndGame = () => {
 		setplayersCards([])
 		setIsWin(null)
+		setSelectedPokemons([])
 	}
 
 	return (
@@ -41,10 +38,8 @@ const GamePage = () => {
 			<PokemonContext.Provider value={{
 				selectedPokemons,
 				playersCards,
-				newGame: null,
 				isWin,
 				onSelect: handleSelectPokemons,
-				onStartGame: handleCLearPokemons,
 				onFinishGame: handlePlayersCards,
 				onWin: handleWin,
 				onEndGame: handleEndGame,
