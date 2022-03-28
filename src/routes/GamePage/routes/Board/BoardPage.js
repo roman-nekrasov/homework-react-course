@@ -6,26 +6,27 @@ import { PokemonContext } from '../../../../context/pokemonContext';
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard';
 import PlayerBoard from './components/PlayerBoard/PlayerBoard'
 import ArrowChoice from './components/ArrowChoice/ArrowChoice';
+import Result from './components/Result/Result';
 
 import style from './style.module.css';
 
 const BOARD_URL = 'https://reactmarathon-api.netlify.app/api/board';
 const PLAYER2_URL = 'https://reactmarathon-api.netlify.app/api/create-player';
 
-// const counterWin = (board, player1, player2) => {
-// 	let countPlayer1 = player1.length;
-// 	let countPlayer2 = player2.length;
+const counterWin = (board, player1, player2) => {
+	let countPlayer1 = player1.length;
+	let countPlayer2 = player2.length;
 
-// 	board.forEach(item => {
-// 		if (item.card.possession === 'blue') {
-// 			countPlayer1++
-// 		}
-// 		if (item.card.possession === 'red') {
-// 			countPlayer2++
-// 		}
-// 	})
-// 	return [countPlayer1, countPlayer2]
-// }
+	board.forEach(item => {
+		if (item.card.possession === 'blue') {
+			countPlayer1++
+		}
+		if (item.card.possession === 'red') {
+			countPlayer2++
+		}
+	})
+	return [countPlayer1, countPlayer2]
+}
 
 
 const BoardPage = () => {
@@ -46,6 +47,7 @@ const BoardPage = () => {
 	const [count, setCount] = useState(0)
 	const [animationPlay, setAnimationPlay] = useState(true)
 	const [isYourMove, setIsYourMove] = useState(!!Math.round(Math.random()))
+	const [result, setResult] = useState(null)
 
 	const navigate = useNavigate()
 
@@ -124,17 +126,22 @@ const BoardPage = () => {
 
 	useEffect(() => {
 		if (count === 9) {
-			// const [count1, count2] = counterWin(board, player1, player2)
-			// if (count1 > count2) {
+			const [count1, count2] = counterWin(board, player1, player2)
+			if (count1 > count2) {
+				setResult('win')
+				onWin(true);
+				onFinishGame(startCards)
+				setTimeout(() => navigate('/game/finish'), 1500)
+			} else if (count1 < count2) {
+				setResult('lose')
+				onFinishGame(startCards)
+				setTimeout(() => navigate('/game/finish'), 1500)
+			} else {
+				setResult('draw')
+				onFinishGame(startCards)
+				setTimeout(() => navigate('/game/finish'), 1500)
+			}
 
-			// } else if (count1 < count2) {
-			// 	console.log('Player 2 win');
-			// } else {
-			// 	console.log('Draw');
-			// }
-			onWin(true);
-			onFinishGame(startCards)
-			navigate('/game/finish')
 		}
 	}, [count, board, player1, player2, navigate, onFinishGame, startCards, onWin])
 
@@ -181,6 +188,9 @@ const BoardPage = () => {
 					isYourMove={!isYourMove}
 				/>
 			</div>
+			{
+				result !== null && <Result type={result} />
+			}
 		</div>
 	);
 };
