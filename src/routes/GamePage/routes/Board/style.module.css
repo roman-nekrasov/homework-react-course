@@ -67,3 +67,29 @@
 	color: #000;
 	background-color: rgb(253, 85, 239);
 }
+
+.yourMoveLeft {
+	position: absolute;
+	top: 2vh;
+	left: 25vw;
+	font-size: 24px;
+	text-align: center;
+	color: rgb(34, 32, 32);
+	background-color: rgb(252, 200, 28);
+	border-radius: 10px;
+	width: 100%;
+	max-width: 18vw;
+}
+
+.yourMoveRight {
+	position: absolute;
+	top: 2vh;
+	right: 25vw;
+	font-size: 24px;
+	text-align: center;
+	color: rgb(34, 32, 32);
+	background-color: rgb(252, 200, 28);
+	border-radius: 10px;
+	width: 100%;
+	max-width: 18vw;
+}

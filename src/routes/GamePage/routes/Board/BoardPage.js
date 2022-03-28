@@ -43,6 +43,7 @@ const BoardPage = () => {
 	const [player2, setPlayer2] = useState([])
 	const [choseCard, setChoseCard] = useState(null)
 	const [count, setCount] = useState(0)
+	const [isYourMove, setIsYourMove] = useState(true)
 
 	const navigate = useNavigate()
 
@@ -105,7 +106,14 @@ const BoardPage = () => {
 		}
 		setBoard(request.data)
 		setCount(prevState => prevState + 1)
+		setIsYourMove(prevState => !prevState)
 	}
+
+	useEffect(() => {
+		if (player1.length === 5 && player2.length === 5) {
+			setStartCards([player1, player2])
+		}
+	}, [player1, player2])
 
 	useEffect(() => {
 		if (count === 9) {
@@ -123,20 +131,18 @@ const BoardPage = () => {
 		}
 	}, [count, board, player1, player2, navigate, onFinishGame, startCards, onWin])
 
-	useEffect(() => {
-		if (player1.length === 5 && player2.length === 5) {
-			setStartCards([player1, player2])
-		}
-	}, [player1, player2])
-
 	return (
 		<div className={style.root}>
+			{
+				isYourMove && <p className={style.yourMoveLeft}>Your move, Player 1!</p>
+			}
 			<div className={style.playerOne}>
 				<PlayerBoard
 					player={1}
 					cards={player1}
 					onClickCard={(card) => setChoseCard(card)}
-					left={true} />
+					left={true}
+					isYourMove={isYourMove} />
 			</div>
 			<div className={style.board}>
 				{
@@ -153,15 +159,17 @@ const BoardPage = () => {
 					))
 				}
 			</div>
+			{
+				!isYourMove && <p className={style.yourMoveRight}>Your move, Player 2!</p>
+			}
 			<div className={style.playerTwo} >
 				<PlayerBoard
 					player={2}
 					cards={player2}
 					onClickCard={(card) => setChoseCard(card)}
+					isYourMove={!isYourMove}
 				/>
 			</div>
-
-			<button className={style['game-button']} onClick={() => navigate('/game')} >START NEW GAME</button>
 		</div>
 	);
 };
