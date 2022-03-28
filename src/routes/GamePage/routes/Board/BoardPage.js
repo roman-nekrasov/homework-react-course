@@ -113,6 +113,7 @@ const BoardPage = () => {
 		if (choseCard.player === 2) {
 			setPlayer2(prevState => prevState.filter(card => card.id !== choseCard.id))
 		}
+		// setChoseCard(null)
 		setBoard(request.data)
 		setCount(prevState => prevState + 1)
 		setIsYourMove(prevState => !prevState)
@@ -168,7 +169,7 @@ const BoardPage = () => {
 						<div
 							key={item.position}
 							className={style.boardPlate}
-							onClick={() => !item.card && onClickBoard(item.position)}
+							onClick={() => choseCard && !item.card && onClickBoard(item.position)}
 						>
 							{
 								item.card && <PokemonCard {...item.card} minimize isActive />
