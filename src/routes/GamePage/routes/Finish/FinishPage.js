@@ -46,7 +46,9 @@ const FinishPage = () => {
 						/>)
 					}
 				</div>
-				<button className={style['game-button']} onClick={() => endGame()} >END GAME</button>
+				<div className={style["button-wrap"]}>
+					<button className={style['game-button']} onClick={() => endGame()} >END GAME</button>
+				</div>
 				<div className={style.playercards}>
 					{
 						playersCards.length && playersCards[1].map(item =>
