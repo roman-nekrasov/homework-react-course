@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref } from "firebase/database";
+import { getDatabase, ref, push, set } from "firebase/database";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAnXDeyaMmAtkxYLZDZkQ860qBxAVXLJHQ",
@@ -16,4 +16,8 @@ export const fire = initializeApp(firebaseConfig);
 export const database = getDatabase();
 export const dbRef = ref(database, 'pokemons');
 
+export const addNewPokemon = (newPokemon) => {
+	const newPokemonRef = push(dbRef);
+	set(newPokemonRef, { ...newPokemon })
+}
 

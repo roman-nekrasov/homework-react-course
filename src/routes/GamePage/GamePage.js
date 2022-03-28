@@ -31,6 +31,11 @@ const GamePage = () => {
 		setIsWin(value)
 	}
 
+	const handleEndGame = () => {
+		setplayersCards([])
+		setIsWin(null)
+	}
+
 	return (
 		<>
 			<PokemonContext.Provider value={{
@@ -42,6 +47,7 @@ const GamePage = () => {
 				onStartGame: handleCLearPokemons,
 				onFinishGame: handlePlayersCards,
 				onWin: handleWin,
+				onEndGame: handleEndGame,
 			}}>
 				<Outlet />
 			</PokemonContext.Provider>

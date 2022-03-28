@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { PokemonContext } from "../../../../context/pokemonContext"
-import { set, push } from 'firebase/database'
-import { dbRef } from '../../../../service/firebase'
+import { addNewPokemon } from '../../../../service/firebase'
 
 import PokemonCard from "../../../../components/PokemonCard/PokemonCard"
 
@@ -10,11 +9,10 @@ import style from './style.module.css'
 import cn from 'classnames'
 
 const FinishPage = () => {
-	const { playersCards, isWin } = useContext(PokemonContext)
+	const { playersCards, isWin, onEndGame } = useContext(PokemonContext)
 	const navigate = useNavigate()
 
 	const [isAchived, setIsAchived] = useState(null)
-	console.log(playersCards);
 
 	useEffect(() => {
 		if (playersCards.length === 0) {
@@ -24,11 +22,10 @@ const FinishPage = () => {
 
 	const endGame = () => {
 		if (isAchived) {
-			const newPokemonRef = push(dbRef);
 			const achivedPokemon = playersCards[1].filter(item => item.id === isAchived)[0];
-			set(newPokemonRef, { ...achivedPokemon })
+			addNewPokemon(achivedPokemon)
 		}
-		console.log('click');
+		onEndGame()
 		navigate('/game')
 	}
 
@@ -63,7 +60,7 @@ const FinishPage = () => {
 									name={item.name}
 									img={item.img}
 									minimize
-									achived={isAchived === item.id}
+									isSelected={isAchived === item.id}
 								/>
 							</div>
 						)

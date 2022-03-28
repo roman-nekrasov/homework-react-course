@@ -2,7 +2,7 @@ import style from './style.module.css'
 import cardBack from '../../assets/card-back-side.jpg'
 import cn from 'classnames'
 
-const PokemonCard = ({ type, values, id, dbKey, name, img, isActive = true, onClickCard, minimize, className, isSelected, possession, achived }) => {
+const PokemonCard = ({ type, values, id, dbKey, name, img, isActive = true, onClickCard, minimize, className, isSelected, possession }) => {
 
 	return (
 		<>
