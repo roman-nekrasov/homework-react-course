@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import PokemonCard from "../../../../../components/PokemonCard/PokemonCard"
+import PokemonCard from "../../../../../../components/PokemonCard/PokemonCard"
 
 import style from './style.module.css'
 import cn from 'classnames'

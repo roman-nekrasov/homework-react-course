@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { PokemonContext } from '../../../../context/pokemonContext';
 
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard';
-import PlayerBoard from './component/PlayerBoard'
+import PlayerBoard from './components/PlayerBoard/PlayerBoard'
+import ArrowChoice from './components/ArrowChoice/ArrowChoice';
 
 import style from './style.module.css';
 
@@ -43,7 +44,8 @@ const BoardPage = () => {
 	const [player2, setPlayer2] = useState([])
 	const [choseCard, setChoseCard] = useState(null)
 	const [count, setCount] = useState(0)
-	const [isYourMove, setIsYourMove] = useState(true)
+	const [animationPlay, setAnimationPlay] = useState(true)
+	const [isYourMove, setIsYourMove] = useState(!!Math.round(Math.random()))
 
 	const navigate = useNavigate()
 
@@ -52,6 +54,11 @@ const BoardPage = () => {
 			navigate('/game')
 		}
 	})
+
+	useEffect(() => {
+		const timer = setTimeout(() => setAnimationPlay(false), 3800);
+		return () => clearTimeout(timer)
+	}, [])
 
 	useEffect(() => {
 		let isMounted = true
@@ -133,8 +140,12 @@ const BoardPage = () => {
 
 	return (
 		<div className={style.root}>
+			<ArrowChoice
+				isYourMove={isYourMove}
+				animationPlay={animationPlay}
+			/>
 			{
-				isYourMove && <p className={style.yourMoveLeft}>Your move, Player 1!</p>
+				!animationPlay && isYourMove && <p className={style.yourMoveLeft}>Your move, Player 1!</p>
 			}
 			<div className={style.playerOne}>
 				<PlayerBoard
@@ -160,7 +171,7 @@ const BoardPage = () => {
 				}
 			</div>
 			{
-				!isYourMove && <p className={style.yourMoveRight}>Your move, Player 2!</p>
+				!animationPlay && !isYourMove && <p className={style.yourMoveRight}>Your move, Player 2!</p>
 			}
 			<div className={style.playerTwo} >
 				<PlayerBoard
