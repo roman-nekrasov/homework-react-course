@@ -1,9 +1,11 @@
-import { useState, useEffect, useContext, } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import { useDispatch } from 'react-redux'
+import { addPokemon, removePokemon } from '../../../../store/gameSlice'
 
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard'
 
-import { PokemonContext } from '../../../../context/pokemonContext'
 import { dbRef } from '../../../../service/firebase'
 import { onValue } from 'firebase/database'
 
@@ -15,9 +17,9 @@ const StartPage = () => {
 	const [cards, setCards] = useState({})
 	const [remainingCards, setRemainingCards] = useState(5)
 
-	const navigate = useNavigate()
+	const dispatch = useDispatch();
 
-	const pokemonContext = useContext(PokemonContext)
+	const navigate = useNavigate()
 
 	const getPokemons = (dbRef) => {
 		onValue(dbRef, (snapshot) => {
@@ -28,7 +30,6 @@ const StartPage = () => {
 	}
 
 	const startGame = () => {
-		pokemonContext.newGame = true;
 		navigate('board')
 	}
 
@@ -45,10 +46,6 @@ const StartPage = () => {
 	}, [cards])
 
 	const onClickCard = (dbKey) => {
-		if (pokemonContext.newGame) {
-			pokemonContext.onStartGame()
-			pokemonContext.newGame = false
-		}
 		if (remainingCards || cards[dbKey].selected) {
 			setCards(prevState => {
 				return Object.entries(prevState).reduce((acc, item) => {
@@ -62,8 +59,9 @@ const StartPage = () => {
 					return acc;
 				}, {});
 			});
+
 			const isSelected = !cards[dbKey].selected
-			pokemonContext.onSelect(cards[dbKey], dbKey, isSelected)
+			isSelected ? dispatch(addPokemon(cards[dbKey])) : dispatch(removePokemon(cards[dbKey].id))
 		}
 	}
 

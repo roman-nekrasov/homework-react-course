@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { PokemonContext } from '../../../../context/pokemonContext';
+import { useSelector, useDispatch, } from 'react-redux'
+import { addPlayersCards, selectPokemons, setWin } from '../../../../store/gameSlice'
 
 import PokemonCard from '../../../../components/PokemonCard/PokemonCard';
 import PlayerBoard from './components/PlayerBoard/PlayerBoard'
@@ -30,10 +31,10 @@ const counterWin = (board, player1, player2) => {
 
 
 const BoardPage = () => {
-	const { selectedPokemons, onFinishGame, onWin } = useContext(PokemonContext)
+	const selectedPokemons = useSelector(selectPokemons);
+	const dispatch = useDispatch();
 
 	const [board, setBoard] = useState([])
-	const [startCards, setStartCards] = useState([])
 	const [player1, setPlayer1] = useState(() => {
 		return Object.values(selectedPokemons).map(item => {
 			return {
@@ -52,7 +53,7 @@ const BoardPage = () => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (Object.keys(selectedPokemons).length === 0) {
+		if (selectedPokemons.length !== 5) {
 			navigate('/game')
 		}
 	})
@@ -113,7 +114,7 @@ const BoardPage = () => {
 		if (choseCard.player === 2) {
 			setPlayer2(prevState => prevState.filter(card => card.id !== choseCard.id))
 		}
-		// setChoseCard(null)
+		setChoseCard(null)
 		setBoard(request.data)
 		setCount(prevState => prevState + 1)
 		setIsYourMove(prevState => !prevState)
@@ -121,30 +122,27 @@ const BoardPage = () => {
 
 	useEffect(() => {
 		if (player1.length === 5 && player2.length === 5) {
-			setStartCards([player1, player2])
+			dispatch(addPlayersCards([player1, player2]))
 		}
-	}, [player1, player2])
+	}, [player1, player2, dispatch])
 
 	useEffect(() => {
 		if (count === 9) {
 			const [count1, count2] = counterWin(board, player1, player2)
 			if (count1 > count2) {
 				setResult('win')
-				onWin(true);
-				onFinishGame(startCards)
+				dispatch(setWin())
 				setTimeout(() => navigate('/game/finish'), 1500)
 			} else if (count1 < count2) {
 				setResult('lose')
-				onFinishGame(startCards)
 				setTimeout(() => navigate('/game/finish'), 1500)
 			} else {
 				setResult('draw')
-				onFinishGame(startCards)
 				setTimeout(() => navigate('/game/finish'), 1500)
 			}
 
 		}
-	}, [count, board, player1, player2, navigate, onFinishGame, startCards, onWin])
+	}, [count, board, player1, player2, navigate, dispatch])
 
 	return (
 		<div className={style.root}>

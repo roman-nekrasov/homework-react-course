@@ -11,8 +11,8 @@ const PlayerBoard = ({ cards, left, onClickCard, player, isYourMove }) => {
 	return (
 		<>
 			{
-				cards.map(card => (
-					<div key={card.dbKey || card.id}
+				cards.map((card, index) => (
+					<div key={card.dbKey || card.name + index}
 						className={cn(style.cardBoard, { [style.left]: left, [style.isSelected]: isSelected === card.id })}
 						onClick={() => {
 							if (isYourMove) {

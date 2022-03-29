@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { PokemonContext } from "../../../../context/pokemonContext"
+import { useSelector, useDispatch } from 'react-redux'
+import { setDefaultValues } from '../../../../store/gameSlice'
 import { addNewPokemon } from '../../../../service/firebase'
 
 import PokemonCard from "../../../../components/PokemonCard/PokemonCard"
@@ -9,8 +10,11 @@ import style from './style.module.css'
 import cn from 'classnames'
 
 const FinishPage = () => {
-	const { playersCards, isWin, onEndGame } = useContext(PokemonContext)
 	const navigate = useNavigate()
+	const playersCards = useSelector(state => state.game.playersCards)
+	const isWin = useSelector(state => state.game.isWin)
+
+	const dispatch = useDispatch()
 
 	const [isAchived, setIsAchived] = useState(null)
 
@@ -25,7 +29,7 @@ const FinishPage = () => {
 			const achivedPokemon = playersCards[1].filter(item => item.id === isAchived)[0];
 			addNewPokemon(achivedPokemon)
 		}
-		onEndGame()
+		dispatch(setDefaultValues())
 		navigate('/game')
 	}
 
